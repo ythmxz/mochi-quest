@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqkrmetdgvhxt"]
+
+[ext_resource type="AudioStream" uid="uid://vnyjkey842vr" path="res://assets/sounds/block_break_sound.wav" id="1_cggx8"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jybtr"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("1_cggx8")
+stream_0/weight = 1.0
+
+[node name="BreakSFX" type="AudioStreamPlayer"]
+stream = SubResource("AudioStreamRandomizer_jybtr")
+bus = &"SFX"

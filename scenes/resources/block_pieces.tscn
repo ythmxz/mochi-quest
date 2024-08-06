@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://c67us0wbudgpr"]
+
+[ext_resource type="Script" path="res://scripts/resources/block_pieces.gd" id="1_rdwbk"]
+
+[node name="BlockPieces" type="RigidBody2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_rdwbk")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="Notifier" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+
+[connection signal="screen_exited" from="Notifier" to="." method="_on_notifier_screen_exited"]

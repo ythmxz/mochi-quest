@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://bi1yxtvkx6tyf"]
+
+[ext_resource type="Texture2D" uid="uid://duhgxxijpu7vv" path="res://assets/sprites/robo_pumpkin/Hurt (16 x 16).png" id="1_3vcs5"]
+[ext_resource type="Script" path="res://scripts/enemies/robo_pumpkin.gd" id="1_27gas"]
+[ext_resource type="Texture2D" uid="uid://dxbcqt4fl5v7s" path="res://assets/sprites/robo_pumpkin/Walking (16 x 16).png" id="3_xtpxm"]
+[ext_resource type="PackedScene" uid="uid://dc2ls8d4ql8a0" path="res://scenes/resources/hitbox.tscn" id="4_wvhjl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osbr6"]
+atlas = ExtResource("1_3vcs5")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5aig8"]
+atlas = ExtResource("3_xtpxm")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcr1v"]
+atlas = ExtResource("3_xtpxm")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ctly6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_osbr6")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5aig8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vcr1v")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hbgxq"]
+size = Vector2(14, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kgbbv"]
+size = Vector2(8, 2)
+
+[node name="RoboPumpkin" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 35
+script = ExtResource("1_27gas")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_ctly6")
+animation = &"walk"
+autoplay = "walk"
+frame_progress = 0.192242
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_hbgxq")
+
+[node name="WallDetector" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(0, -4)
+target_position = Vector2(-9, 0)
+collision_mask = 6
+hit_from_inside = true
+
+[node name="Hitbox" parent="." instance=ExtResource("4_wvhjl")]
+position = Vector2(0, -11)
+
+[node name="HitCollision" type="CollisionShape2D" parent="Hitbox"]
+visible = false
+shape = SubResource("RectangleShape2D_kgbbv")
+debug_color = Color(0.7, 0, 0, 0.419608)

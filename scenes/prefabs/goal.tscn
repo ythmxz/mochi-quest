@@ -1,0 +1,91 @@
+[gd_scene load_steps=7 format=3 uid="uid://dxrop10le78hm"]
+
+[ext_resource type="Script" path="res://scripts/prefabs/goal.gd" id="1_iyyta"]
+[ext_resource type="Texture2D" uid="uid://3auy65bb76ps" path="res://assets/misc/Food/Sushi_Variety (16 x 16).png" id="2_g1yl5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ijre3"]
+
+[sub_resource type="Animation" id="Animation_5wd1f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -8)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Collision:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -5)]
+}
+
+[sub_resource type="Animation" id="Animation_q6wx6"]
+resource_name = "float"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -8), Vector2(0, -12)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Collision:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -5), Vector2(0, -9)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8w6vt"]
+_data = {
+"RESET": SubResource("Animation_5wd1f"),
+"float": SubResource("Animation_q6wx6")
+}
+
+[node name="Goal" type="Area2D"]
+script = ExtResource("1_iyyta")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_g1yl5")
+region_enabled = true
+region_rect = Rect2(48, 0, 16, 16)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_ijre3")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8w6vt")
+}
+autoplay = "float"
+speed_scale = 0.5
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

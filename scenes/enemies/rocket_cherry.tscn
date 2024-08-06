@@ -1,0 +1,135 @@
+[gd_scene load_steps=15 format=3 uid="uid://m2s21dfwx04v"]
+
+[ext_resource type="Texture2D" uid="uid://movu7ik0v3uw" path="res://assets/sprites/rocket_cherry/Flying (16 x 32).png" id="1_3ond0"]
+[ext_resource type="Script" path="res://scripts/enemies/rocket_cherry.gd" id="1_f0hfj"]
+[ext_resource type="Texture2D" uid="uid://d16r55moqlgw1" path="res://assets/sprites/rocket_cherry/Hurt_Falling (16 x 32).png" id="2_25a6e"]
+[ext_resource type="PackedScene" uid="uid://dc2ls8d4ql8a0" path="res://scenes/resources/hitbox.tscn" id="3_e4ecy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4rsa"]
+atlas = ExtResource("1_3ond0")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_obuah"]
+atlas = ExtResource("1_3ond0")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_741ko"]
+atlas = ExtResource("2_25a6e")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tcmfu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4rsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_obuah")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_741ko")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lnup0"]
+size = Vector2(13, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wapll"]
+size = Vector2(11, 2)
+
+[sub_resource type="Curve2D" id="Curve2D_6lglk"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -64, 0, 0, 0, 0, 0, -64)
+}
+point_count = 3
+
+[sub_resource type="Animation" id="Animation_orgfl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path/PathFollow:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_l2nd1"]
+resource_name = "fly"
+length = 2.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path/PathFollow:progress_ratio")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1ef8x"]
+_data = {
+"RESET": SubResource("Animation_orgfl"),
+"fly": SubResource("Animation_l2nd1")
+}
+
+[node name="RocketCherry" type="Node2D"]
+
+[node name="Character" type="CharacterBody2D" parent="."]
+collision_layer = 4
+collision_mask = 35
+script = ExtResource("1_f0hfj")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Character"]
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_tcmfu")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="Collision" type="CollisionShape2D" parent="Character"]
+visible = false
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_lnup0")
+
+[node name="Hitbox" parent="Character" instance=ExtResource("3_e4ecy")]
+position = Vector2(0.5, -7)
+
+[node name="HitCollision" type="CollisionShape2D" parent="Character/Hitbox"]
+visible = false
+shape = SubResource("RectangleShape2D_wapll")
+debug_color = Color(0.7, 0, 0, 0.419608)
+
+[node name="Path" type="Path2D" parent="."]
+curve = SubResource("Curve2D_6lglk")
+
+[node name="PathFollow" type="PathFollow2D" parent="Path"]
+rotates = false
+
+[node name="Remote" type="RemoteTransform2D" parent="Path/PathFollow"]
+remote_path = NodePath("../../../Character")
+
+[node name="Spawner" type="Marker2D" parent="."]
+visible = false
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1ef8x")
+}
+autoplay = "fly"
+speed_scale = 0.5

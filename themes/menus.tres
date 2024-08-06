@@ -1,0 +1,28 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://cf7id7ya15rcb"]
+
+[ext_resource type="FontFile" uid="uid://ds1iygas57h1u" path="res://assets/fonts/at01.ttf" id="1_gvuar"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q8mpw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_32d12"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mrbv0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fplhx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r2j1k"]
+
+[resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(0.75, 0, 0.25, 1)
+Button/colors/font_focus_color = Color(1, 0.584314, 0, 1)
+Button/colors/font_hover_color = Color(1, 0.584314, 0, 1)
+Button/colors/font_hover_pressed_color = Color(0, 0.65098, 0.32549, 1)
+Button/colors/font_pressed_color = Color(0, 0.65098, 0.32549, 1)
+Button/font_sizes/font_size = 48
+Button/fonts/font = ExtResource("1_gvuar")
+Button/styles/disabled = SubResource("StyleBoxEmpty_q8mpw")
+Button/styles/focus = SubResource("StyleBoxEmpty_32d12")
+Button/styles/hover = SubResource("StyleBoxEmpty_mrbv0")
+Button/styles/normal = SubResource("StyleBoxEmpty_fplhx")
+Button/styles/pressed = SubResource("StyleBoxEmpty_r2j1k")

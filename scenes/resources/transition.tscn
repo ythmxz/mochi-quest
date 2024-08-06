@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dph4vuqvvktyv"]
+
+[ext_resource type="Script" path="res://scripts/resources/transition.gd" id="1_5wxsf"]
+[ext_resource type="Shader" path="res://shaders/transition_screen.gdshader" id="2_tswqm"]
+[ext_resource type="Script" path="res://scripts/resources/transition_property.gd" id="3_2atnh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i7ql2"]
+shader = ExtResource("2_tswqm")
+shader_parameter/lines = 8.0
+shader_parameter/threshold = 0.0
+shader_parameter/line_color_a = Color(1, 0.584314, 0, 1)
+shader_parameter/line_color_b = Color(0.0784314, 0.0784314, 0.0784314, 1)
+
+[node name="Transition" type="CanvasLayer"]
+script = ExtResource("1_5wxsf")
+
+[node name="Color" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_i7ql2")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("3_2atnh")

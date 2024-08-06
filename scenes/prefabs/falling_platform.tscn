@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=3 uid="uid://d34rodpqgcvfb"]
+
+[ext_resource type="Script" path="res://scripts/prefabs/falling_platform.gd" id="1_3gtri"]
+[ext_resource type="Texture2D" uid="uid://bxtougcxi0w3p" path="res://assets/tilesets/5 - Misc. universal tiles/Blocks (16 x 16).png" id="2_byjw6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4xug"]
+size = Vector2(32, 16)
+
+[sub_resource type="Animation" id="Animation_ltohl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_bsrca"]
+resource_name = "shake"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-1, 0), Vector2(0, 0), Vector2(1, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vlm1e"]
+_data = {
+"RESET": SubResource("Animation_ltohl"),
+"shake": SubResource("Animation_bsrca")
+}
+
+[node name="FallingPlatform" type="AnimatableBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_3gtri")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+modulate = Color(0.9, 0.7125, 0.45, 1)
+texture = ExtResource("2_byjw6")
+region_enabled = true
+region_rect = Rect2(96, 64, 32, 16)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_b4xug")
+one_way_collision = true
+
+[node name="RespawnTimer" type="Timer" parent="."]
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vlm1e")
+}
+
+[connection signal="timeout" from="RespawnTimer" to="." method="_on_respawn_timer_timeout"]
+[connection signal="animation_finished" from="Animation" to="." method="_on_animation_animation_finished"]

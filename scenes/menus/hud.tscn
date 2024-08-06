@@ -1,0 +1,159 @@
+[gd_scene load_steps=14 format=3 uid="uid://c3hxxpkksa78l"]
+
+[ext_resource type="Texture2D" uid="uid://c1k4pygi3lgqf" path="res://assets/misc/UI/Heart_Icon_1 (8 x 8).png" id="1_f3fc2"]
+[ext_resource type="Script" path="res://scripts/menus/hud.gd" id="1_k00mf"]
+[ext_resource type="Texture2D" uid="uid://blqaterl5mloo" path="res://assets/misc/UI/Heart_Icon_2 (8 x 8).png" id="2_pltsq"]
+[ext_resource type="Texture2D" uid="uid://b7hww0s1b681l" path="res://assets/misc/UI/Heart_Icon_3 (8 x 8).png" id="3_rxpeh"]
+[ext_resource type="Texture2D" uid="uid://bc0we1rnhnerk" path="res://assets/misc/UI/Heart_Icon_4 (8 x 8).png" id="4_t3kdc"]
+[ext_resource type="Theme" uid="uid://3jhadk3wpac5" path="res://themes/hud.tres" id="5_fq650"]
+[ext_resource type="Texture2D" uid="uid://b72qeq6nx0qnl" path="res://assets/misc/UI/Coin_Icon_1 (8 x 8).png" id="6_nqaum"]
+[ext_resource type="Texture2D" uid="uid://bck6isfpd5afd" path="res://assets/misc/UI/Coin_Icon_2 (8 x 8).png" id="7_aggi5"]
+[ext_resource type="Texture2D" uid="uid://bxysr2x8wldn6" path="res://assets/misc/UI/Coin_Icon_3 (8 x 8).png" id="8_gvdht"]
+[ext_resource type="Texture2D" uid="uid://cc20reaioxto6" path="res://assets/misc/UI/Coin_Icon_4 (8 x 8).png" id="9_n3py8"]
+[ext_resource type="Texture2D" uid="uid://dmw6g04l152tt" path="res://assets/misc/UI/Timer_Icon (8 x 8).png" id="10_gbsvc"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_6dah4"]
+frames = 4
+speed_scale = 2.0
+frame_0/texture = ExtResource("1_f3fc2")
+frame_1/texture = ExtResource("2_pltsq")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("3_rxpeh")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("4_t3kdc")
+frame_3/duration = 1.0
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_5gmjg"]
+frames = 4
+speed_scale = 2.0
+frame_0/texture = ExtResource("6_nqaum")
+frame_1/texture = ExtResource("7_aggi5")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("8_gvdht")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("9_n3py8")
+frame_3/duration = 1.0
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="HUDControl" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k00mf")
+
+[node name="Timer" type="Timer" parent="HUDControl"]
+autostart = true
+
+[node name="Container" type="MarginContainer" parent="HUDControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="LeftContainer" type="HBoxContainer" parent="HUDControl/Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUDControl/Container/LeftContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LifeContainer" type="HBoxContainer" parent="HUDControl/Container/LeftContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="LifeIcon" type="TextureRect" parent="HUDControl/Container/LeftContainer/VBoxContainer/LifeContainer"]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AnimatedTexture_6dah4")
+
+[node name="Life Separator" type="Label" parent="HUDControl/Container/LeftContainer/VBoxContainer/LifeContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("5_fq650")
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LifeCounter" type="Label" parent="HUDControl/Container/LeftContainer/VBoxContainer/LifeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("5_fq650")
+text = "00"
+vertical_alignment = 1
+
+[node name="CoinContainer" type="HBoxContainer" parent="HUDControl/Container/LeftContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CoinIcon" type="TextureRect" parent="HUDControl/Container/LeftContainer/VBoxContainer/CoinContainer"]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AnimatedTexture_5gmjg")
+
+[node name="CoinCounter" type="Label" parent="HUDControl/Container/LeftContainer/VBoxContainer/CoinContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("5_fq650")
+text = "000"
+
+[node name="RightContainer" type="HBoxContainer" parent="HUDControl/Container"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUDControl/Container/RightContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ScoreContainer" type="HBoxContainer" parent="HUDControl/Container/RightContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 10
+
+[node name="ScoreCounter" type="Label" parent="HUDControl/Container/RightContainer/VBoxContainer/ScoreContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("5_fq650")
+text = "000000"
+vertical_alignment = 1
+
+[node name="TimeContainer" type="HBoxContainer" parent="HUDControl/Container/RightContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="HUDControl/Container/RightContainer/VBoxContainer/TimeContainer"]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("10_gbsvc")
+
+[node name="TimeCounter" type="Label" parent="HUDControl/Container/RightContainer/VBoxContainer/TimeContainer"]
+layout_mode = 2
+theme = ExtResource("5_fq650")
+text = "00:00"
+vertical_alignment = 1
+
+[connection signal="timeout" from="HUDControl/Timer" to="HUDControl" method="_on_timer_timeout"]
