@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="[Tutorial] Clécio Espindola Platformer"
+config/name="Mochi Quest"
 config/tags=PackedStringArray("2d", "tutorial")
 run/main_scene="res://scenes/menus/main_menu.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
